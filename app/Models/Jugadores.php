@@ -17,7 +17,7 @@ class Jugadores extends Model
         return $this->belongsTo(Tipo_documentos::class);
     }
 
-    public function nacionalida () : BelongsTo
+    public function nacionalidad () : BelongsTo
     {
         return $this->belongsTo(Nacionalidades::class);
     }
@@ -28,7 +28,13 @@ class Jugadores extends Model
     }
 
 
-    
+    public function user () : BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+
 
 
 }

@@ -23,44 +23,42 @@ class JugadoresResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('documento')
-                    ->required()
-                    ->maxLength(50),
-                Forms\Components\Select::make('tipo_documento_id')
-                    ->relationship('tipoDocumento', 'id')
+                Forms\Components\TextInput::make('nombre_jugador')
+                    ->maxLength(60)
                     ->required(),
                 Forms\Components\TextInput::make('apellido_jugador')
                     ->maxLength(60)
-                    ->default(null),
-                Forms\Components\TextInput::make('nombre_jugador')
-                    ->maxLength(60)
-                    ->default(null),
+                    ->required(),
+                Forms\Components\Select::make('tipo_documento_id')
+                    ->relationship('tipodocumento', 'descripcion')
+                    ->required(),
+                Forms\Components\TextInput::make('documento')
+                    ->required()
+                    ->unique()
+                    ->maxLength(50),
                 Forms\Components\TextInput::make('nro_ficha_anterior')
                     ->maxLength(50)
                     ->default(null),
                 Forms\Components\DatePicker::make('fecha_nacimiento'),
-                Forms\Components\TextInput::make('nacionalidad_id')
-                    ->numeric()
+                Forms\Components\Select::make('nacionalidad_id')
+                    ->relationship('nacionalidad', 'descripcion')
                     ->default(null),
                 Forms\Components\Select::make('club_id')
-                    ->relationship('club', 'id')
+                    ->relationship('club', 'nombre_club')
                     ->default(null),
-                Forms\Components\TextInput::make('fotografia')
-                    ->maxLength(200)
-                    ->default(null),
-                Forms\Components\TextInput::make('foto_documento_frontal')
-                    ->maxLength(200)
-                    ->default(null),
-                Forms\Components\TextInput::make('foto_documento_dorsal')
-                    ->maxLength(200)
-                    ->default(null),
+                Forms\Components\FileUpload::make('fotografia')
+                    ->image(),
+                Forms\Components\FileUpload::make('foto_documento_frontal')
+                    ->image(),
+                Forms\Components\FileUpload::make('foto_documento_dorsal')
+                    ->image(),
                 Forms\Components\DatePicker::make('fecha_vencimiento_cedula'),
                 Forms\Components\TextInput::make('codigo_qr')
                     ->maxLength(200)
                     ->default(null),
-                Forms\Components\TextInput::make('user_id')
-                    ->numeric()
-                    ->default(null),
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->required(),
                 Forms\Components\TextInput::make('habilitado')
                     ->required()
                     ->numeric()
@@ -80,15 +78,16 @@ class JugadoresResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('documento')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('tipoDocumento.id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('apellido_jugador')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('nombre_jugador')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('apellido_jugador')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('documento')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('tipodocumento.descripcion')
+                    ->label('Tipo de Documento')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('nro_ficha_anterior')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('fecha_nacimiento')
@@ -97,21 +96,10 @@ class JugadoresResource extends Resource
                 Tables\Columns\TextColumn::make('nacionalidad_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('club.id')
+                Tables\Columns\TextColumn::make('club.descripcion')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('fotografia')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('foto_documento_frontal')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('foto_documento_dorsal')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('fecha_vencimiento_cedula')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('codigo_qr')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('user_id')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('habilitado')
