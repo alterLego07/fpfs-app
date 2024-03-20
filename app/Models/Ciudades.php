@@ -22,6 +22,5 @@ class Ciudades extends Model
     public function departamento(): BelongsTo
     {
         return $this->belongsTo(Departamentos::class);
-
     }
 }

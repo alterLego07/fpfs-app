@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class CiudadesResource extends Resource
 {
     protected static ?string $model = Ciudades::class;
+    protected static ?string $navigationGroup = 'Configuraciones';
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

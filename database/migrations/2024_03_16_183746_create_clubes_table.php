@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('clubes', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_club', 45)->nullable();
+            $table->string('nombre_club', 50)->nullable();
             $table->date('fecha_afiliacion')->nullable();
             $table->bigInteger('ciudad_id')->unsigned();
             $table->bigInteger('departamento_id')->unsigned();
             $table->bigInteger('federacion_id')->unsigned();
-            $table->string('observacion', 45);
+            $table->text('observacion');
             $table->string('image_url', 100)->nullable();
 
             $table->foreign('ciudad_id')

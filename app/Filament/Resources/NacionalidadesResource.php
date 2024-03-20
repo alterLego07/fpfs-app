@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DepartamentosResource\Pages;
-use App\Filament\Resources\DepartamentosResource\RelationManagers;
-use App\Models\Departamentos;
+use App\Filament\Resources\NacionalidadesResource\Pages;
+use App\Filament\Resources\NacionalidadesResource\RelationManagers;
+use App\Models\Nacionalidades;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,11 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DepartamentosResource extends Resource
+class NacionalidadesResource extends Resource
 {
-    protected static ?string $model = Departamentos::class;
+    protected static ?string $model = Nacionalidades::class;
     protected static ?string $navigationGroup = 'Configuraciones';
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -25,7 +25,7 @@ class DepartamentosResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
+                Forms\Components\TextInput::make('descripcion')
                     ->maxLength(45)
                     ->default(null),
             ]);
@@ -35,7 +35,7 @@ class DepartamentosResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')
+                Tables\Columns\TextColumn::make('descripcion')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -69,9 +69,9 @@ class DepartamentosResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDepartamentos::route('/'),
-            'create' => Pages\CreateDepartamentos::route('/create'),
-            'edit' => Pages\EditDepartamentos::route('/{record}/edit'),
+            'index' => Pages\ListNacionalidades::route('/'),
+            'create' => Pages\CreateNacionalidades::route('/create'),
+            'edit' => Pages\EditNacionalidades::route('/{record}/edit'),
         ];
     }
 }

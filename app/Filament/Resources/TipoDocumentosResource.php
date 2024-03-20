@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DepartamentosResource\Pages;
-use App\Filament\Resources\DepartamentosResource\RelationManagers;
-use App\Models\Departamentos;
+use App\Filament\Resources\TipoDocumentosResource\Pages;
+use App\Filament\Resources\TipoDocumentosResource\RelationManagers;
+use App\Models\Tipo_documentos;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,11 +13,12 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DepartamentosResource extends Resource
+class TipoDocumentosResource extends Resource
 {
-    protected static ?string $model = Departamentos::class;
+    protected static ?string $model = Tipo_documentos::class;
+    protected static ?string $navigationLabel = 'Tipo Documentos';
     protected static ?string $navigationGroup = 'Configuraciones';
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -25,9 +26,7 @@ class DepartamentosResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
-                    ->maxLength(45)
-                    ->default(null),
+                //
             ]);
     }
 
@@ -35,16 +34,7 @@ class DepartamentosResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                //
             ])
             ->filters([
                 //
@@ -69,9 +59,9 @@ class DepartamentosResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDepartamentos::route('/'),
-            'create' => Pages\CreateDepartamentos::route('/create'),
-            'edit' => Pages\EditDepartamentos::route('/{record}/edit'),
+            'index' => Pages\ListTipoDocumentos::route('/'),
+            'create' => Pages\CreateTipoDocumentos::route('/create'),
+            'edit' => Pages\EditTipoDocumentos::route('/{record}/edit'),
         ];
     }
 }
