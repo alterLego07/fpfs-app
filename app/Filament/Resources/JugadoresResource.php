@@ -6,6 +6,9 @@ use App\Filament\Resources\JugadoresResource\Pages;
 use App\Filament\Resources\JugadoresResource\RelationManagers;
 use App\Models\Jugadores;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Split;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -21,23 +24,29 @@ class JugadoresResource extends Resource
 
     public static function form(Form $form): Form
     {
+        
+    // dd(auth()->user()->id);
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nombre_jugador')
+                    ->label('Nombre')
                     ->maxLength(60)
                     ->required(),
                 Forms\Components\TextInput::make('apellido_jugador')
+                    ->label('Apellido')
                     ->maxLength(60)
                     ->required(),
                 Forms\Components\Select::make('tipo_documento_id')
+                    ->label('Tipo de Documento')
                     ->relationship('tipodocumento', 'descripcion')
                     ->required(),
                 Forms\Components\TextInput::make('documento')
                     ->required()
-                    ->unique()
+                    ->disabledOn('edit')
                     ->maxLength(50),
                 Forms\Components\TextInput::make('nro_ficha_anterior')
                     ->maxLength(50)
+                    ->disabledOn('edit')
                     ->default(null),
                 Forms\Components\DatePicker::make('fecha_nacimiento'),
                 Forms\Components\Select::make('nacionalidad_id')
@@ -47,30 +56,50 @@ class JugadoresResource extends Resource
                     ->relationship('club', 'nombre_club')
                     ->default(null),
                 Forms\Components\FileUpload::make('fotografia')
-                    ->image(),
+                    ->image()
+                    ->avatar()
+                    ->imageEditor()
+                    ->circleCropper()
+                    ->imageEditorViewportWidth('1920')
+                    ->imageEditorViewportHeight('1080'),
                 Forms\Components\FileUpload::make('foto_documento_frontal')
-                    ->image(),
+                    ->image()
+                    ->imageEditor()
+                    ->imageEditorViewportWidth('1920')
+                    ->imageEditorViewportHeight('1080'),
                 Forms\Components\FileUpload::make('foto_documento_dorsal')
-                    ->image(),
+                    ->image()
+                    ->imageEditor()
+                    ->imageEditorViewportWidth('1920')
+                    ->imageEditorViewportHeight('1080'),
                 Forms\Components\DatePicker::make('fecha_vencimiento_cedula'),
                 Forms\Components\TextInput::make('codigo_qr')
+                    ->label('Codigo QR')
                     ->maxLength(200)
                     ->default(null),
                 Forms\Components\Select::make('user_id')
+                    ->label('Usuario Creador')
                     ->relationship('user', 'name')
-                    ->required(),
-                Forms\Components\TextInput::make('habilitado')
-                    ->required()
-                    ->numeric()
-                    ->default(1),
-                Forms\Components\TextInput::make('estado')
-                    ->required()
-                    ->numeric()
-                    ->default(1),
-                Forms\Components\TextInput::make('sexo')
-                    ->required()
-                    ->numeric()
-                    ->default(1),
+                    ->disabled()
+                    ->default(auth()->user()->id),
+                Forms\Components\Radio::make('habilitado')
+                    ->label('Estado Pase')
+                    ->options([
+                        '1' => 'Habilitado',
+                        '2' => 'Inhabilitado',
+                        '3' => 'Libre'
+                    ])
+                    ->default('1'),
+                Forms\Components\Toggle::make('estado')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->default(true),
+                Forms\Components\Radio::make('sexo')
+                    ->options([
+                        '1' => 'Masculino',
+                        '2' => 'Femenino',
+                        '3' => 'Otro'
+                    ]),
             ]);
     }
 
