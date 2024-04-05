@@ -85,9 +85,9 @@ class JugadoresResource extends Resource
                 Forms\Components\Radio::make('habilitado')
                     ->label('Estado Pase')
                     ->options([
-                        '1' => 'Habilitado',
-                        '2' => 'Inhabilitado',
-                        '3' => 'Libre'
+                        1 => 'Habilitado',
+                        2 => 'Inhabilitado',
+                        3 => 'Libre'
                     ])
                     ->default('1'),
                 Forms\Components\Toggle::make('estado')
@@ -108,29 +108,37 @@ class JugadoresResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nombre_jugador')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('apellido_jugador')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('documento')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('tipodocumento.descripcion')
                     ->label('Tipo de Documento')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nro_ficha_anterior')
+                    ->label('Nro. Ficha Anterior')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('fecha_nacimiento')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('nacionalidad_id')
+                Tables\Columns\TextColumn::make('nacionalidad.descripcion')
+                    ->label('Nacionalidad')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('club.descripcion')
+                    ->label('Club Actual')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
+                    ->label('Usuario Creacion')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('habilitado')
                     ->numeric()
                     ->sortable(),

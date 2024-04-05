@@ -13,16 +13,6 @@ class Jugadores extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'estado' => 'boolean',
-        'sexo' => 'array',
-        'habilitado' => 'array'
-    ];
-
-    // public function tipodocumento (): BelongsTo
-    // {
-    //     return $this->belongsTo(Tipo_documentos::class);
-    // }
 
 
     public function tipodocumento (): HasOne
