@@ -118,8 +118,8 @@ class JugadoresResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tipodocumento.descripcion')
                     ->label('Tipo de Documento')
-                    ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('nro_ficha_anterior')
                     ->label('Nro. Ficha Anterior')
                     ->searchable(),
@@ -128,12 +128,12 @@ class JugadoresResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nacionalidad.descripcion')
                     ->label('Nacionalidad')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('club.descripcion')
+                    // ->listWithLineBreaks()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('club.nombre_club')
                     ->label('Club Actual')
-                    ->numeric()
-                    ->sortable(),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Usuario Creacion')
                     ->numeric()
@@ -141,13 +141,17 @@ class JugadoresResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('habilitado')
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('estado')
-                    ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\ToggleColumn::make('estado'),
                 Tables\Columns\TextColumn::make('sexo')
-                    ->numeric()
-                    ->sortable(),
+                    ->color(fn (string $state): string => match ($state) {
+                        '1' => 'gray',
+                        '2' => 'warning',
+                        '3' => 'success',
+                    })
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
