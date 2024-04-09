@@ -101,6 +101,7 @@ class JugadoresResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('fotografia'),
                 Tables\Columns\TextColumn::make('nombre_jugador')
                     ->searchable()
                     ->sortable(),
@@ -160,7 +161,6 @@ class JugadoresResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\RestoreAction::make(),
                 Action::make('Ver Planilla')
                 ->icon('heroicon-o-qr-code')
                 ->url(fn(Jugadores $record): string => static::getUrl('vista', ['record' => $record])),

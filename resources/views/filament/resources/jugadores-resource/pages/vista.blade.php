@@ -1,6 +1,6 @@
 <x-filament::page>
     
-    {{-- {{dd($record);}} --}}
+    {{-- {{dd($record->fotografia);}} --}}
 
     
     <div style="display: flex;">
