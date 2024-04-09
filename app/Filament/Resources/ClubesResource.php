@@ -38,7 +38,8 @@ class ClubesResource extends Resource
                     ->relationship('departamento', 'nombre')
                     ->required(),
                 Forms\Components\RichEditor::make('observacion')
-                    ->required(),
+                    ->required()
+                    ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image_url')
                     ->image(),
             ]);

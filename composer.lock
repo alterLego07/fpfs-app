@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c8958a2953a61881c57f6e660e2a1a8",
+    "content-hash": "0870875ced8ab8a1c6d0f61e2cf00141",
     "packages": [
         {
             "name": "althinect/filament-spatie-roles-permissions",
@@ -2445,88 +2445,6 @@
                 "source": "https://github.com/kirschbaum-development/eloquent-power-joins/tree/3.5.0"
             },
             "time": "2024-02-13T15:40:14+00:00"
-        },
-        {
-            "name": "lara-zeus/qr",
-            "version": "1.1.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lara-zeus/qr.git",
-                "reference": "d2317b1f6841bc5fc7ea5c109b5e150872040f62"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lara-zeus/qr/zipball/d2317b1f6841bc5fc7ea5c109b5e150872040f62",
-                "reference": "d2317b1f6841bc5fc7ea5c109b5e150872040f62",
-                "shasum": ""
-            },
-            "require": {
-                "filament/filament": "^3.0",
-                "php": "^8.1",
-                "simplesoftwareio/simple-qrcode": "~4",
-                "spatie/laravel-package-tools": "^1.16"
-            },
-            "require-dev": {
-                "laravel/pint": "^1.0",
-                "nunomaduro/collision": "^7.0",
-                "nunomaduro/larastan": "^2.0.1",
-                "nunomaduro/phpinsights": "^2.8",
-                "orchestra/testbench": "^8.0",
-                "phpstan/extension-installer": "^1.1"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "LaraZeus\\Qr\\QrServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "LaraZeus\\Qr\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "php coder",
-                    "email": "info@larazeus.com",
-                    "role": "Owner"
-                }
-            ],
-            "description": "Zeus Qr Code Input to generate Qr Code with designing options for filamentPHP",
-            "homepage": "https://larazeus.com/qr",
-            "keywords": [
-                "code",
-                "coulmn",
-                "design",
-                "field",
-                "filamentphp",
-                "generator",
-                "input",
-                "lara-zeus",
-                "laravel",
-                "qr"
-            ],
-            "support": {
-                "issues": "https://github.com/lara-zeus/qr/issues",
-                "source": "https://github.com/lara-zeus/qr"
-            },
-            "funding": [
-                {
-                    "url": "https://www.buymeacoffee.com/larazeus",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/atmonshi",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-03-05T19:09:44+00:00"
         },
         {
             "name": "laravel/framework",

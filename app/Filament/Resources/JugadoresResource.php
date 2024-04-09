@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\JugadoresResource\Pages;
 use App\Filament\Resources\JugadoresResource\RelationManagers;
 use App\Models\Jugadores;
+use BaconQrCode\Encoder\QrCode;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Split;
@@ -15,6 +16,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\Action;
 
 class JugadoresResource extends Resource
 {
@@ -24,8 +26,6 @@ class JugadoresResource extends Resource
 
     public static function form(Form $form): Form
     {
-        
-    // dd(auth()->user()->id);
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nombre_jugador')
@@ -56,12 +56,10 @@ class JugadoresResource extends Resource
                     ->relationship('club', 'nombre_club')
                     ->default(null),
                 Forms\Components\FileUpload::make('fotografia')
+                    ->label('Foto del Jugador')
                     ->image()
                     ->avatar()
-                    ->imageEditor()
-                    ->circleCropper()
-                    ->imageEditorViewportWidth('1920')
-                    ->imageEditorViewportHeight('1080'),
+                    ->directory('jugadores/foto'),
                 Forms\Components\FileUpload::make('foto_documento_frontal')
                     ->image()
                     ->imageEditor()
@@ -73,10 +71,6 @@ class JugadoresResource extends Resource
                     ->imageEditorViewportWidth('1920')
                     ->imageEditorViewportHeight('1080'),
                 Forms\Components\DatePicker::make('fecha_vencimiento_cedula'),
-                Forms\Components\TextInput::make('codigo_qr')
-                    ->label('Codigo QR')
-                    ->maxLength(200)
-                    ->default(null),
                 Forms\Components\Select::make('user_id')
                     ->label('Usuario Creador')
                     ->relationship('user', 'name')
@@ -166,6 +160,10 @@ class JugadoresResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\RestoreAction::make(),
+                Action::make('Ver Planilla')
+                ->icon('heroicon-o-qr-code')
+                ->url(fn(Jugadores $record): string => static::getUrl('vista', ['record' => $record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -187,6 +185,7 @@ class JugadoresResource extends Resource
             'index' => Pages\ListJugadores::route('/'),
             'create' => Pages\CreateJugadores::route('/create'),
             'edit' => Pages\EditJugadores::route('/{record}/edit'),
+            'vista' =>Pages\ViewJugadores::route('/{record}/vista'),
         ];
     }
 }
