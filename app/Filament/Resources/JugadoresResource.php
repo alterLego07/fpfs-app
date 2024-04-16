@@ -84,6 +84,8 @@ class JugadoresResource extends Resource
                         3 => 'Libre'
                     ])
                     ->default('1'),
+                Forms\Components\DatePicker::make('fecha_habilitacion')
+                    ->label('Fecha de Habilitación'),
                 Forms\Components\Toggle::make('estado')
                     ->onColor('success')
                     ->offColor('danger')
