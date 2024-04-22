@@ -6,8 +6,8 @@
         $fecha = new DateTime();
         $fecha_nac =  new DateTime($record->fecha_nacimiento);
         $edad = intval($fecha->diff($fecha_nac)->format('%y'));
-        // dd(var_dump($edad));
-        // dd(asset('images/'.$record->fotografia));
+        $foto = asset("storage/".$record->fotografia);
+        // dd($foto);
         $categoria = ( $edad > 18 ? 'PRIMERA' : 'C'.$edad);
 
     @endphp
@@ -17,10 +17,14 @@
             <h1>Ficha del Jugador</h1>
             
             <div class="card">
-                <img src="{{asset($record->fotografia) }}" alt="Foto de {{ $record->nombre_jugador }}">
+                <div class="card" style="border: 5px solid #ccc; padding:10px; margin:10px; width=300px !important;">
+                    <img src="{{$foto}}" alt="{{ $record->nombre_jugador }}" width="300px" height="200px">
+                </div>
+                <h1>{{ $record->apellido_jugador }}, {{ $record->nombre_jugador }}</h1>
                 <p>Nro. de Ficha: {{ $record->nro_ficha_anterior }}</p>
+                <p>Documento : {{ $record->documento}}</p>
             </div>
-            <h2>{{ $record->apellido_jugador }}, {{ $record->nombre_jugador }}</h2>
+           
             <p>Edad: {{ $edad }} años</p>
             <p>Categoria: {{ $categoria }}</p>
             <p>Género: {{ ($record->sexo == 1) ? 'Masculino': 'Femenino'}}</p>

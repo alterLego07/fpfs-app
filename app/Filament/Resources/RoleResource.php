@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CiudadesResource\Pages;
-use App\Filament\Resources\CiudadesResource\RelationManagers;
-use App\Models\Ciudades;
+use App\Filament\Resources\RoleResource\Pages;
+use App\Filament\Resources\RoleResource\RelationManagers;
+use App\Models\Role;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,24 +13,26 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CiudadesResource extends Resource
+class RoleResource extends Resource
 {
-    protected static ?string $model = Ciudades::class;
-    protected static ?string $navigationGroup = 'Configuraciones';
-    protected static ?int $navigationSort = 3;
+    protected static ?string $model = Role::class;
+    protected static ?string $modelLabel = 'Rol';
+    protected static ?string $pluralModelLabel = 'Roles';
+    protected static ?string $navigationGroup = 'Seguridad';
+    protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('departamento_id')
+                Forms\Components\TextInput::make('name')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('descripcion')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('guard_name')
                     ->required()
-                    ->maxLength(100),
+                    ->maxLength(255),
             ]);
     }
 
@@ -38,12 +40,9 @@ class CiudadesResource extends Resource
     {
         return $table
             ->columns([
-                // Tables\Columns\TextColumn::make('departamento_id')
-                //     ->numeric()
-                //     ->sortable(),
-                Tables\Columns\TextColumn::make('departamento.nombre')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('descripcion')
+                Tables\Columns\TextColumn::make('guard_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -77,9 +76,9 @@ class CiudadesResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCiudades::route('/'),
-            'create' => Pages\CreateCiudades::route('/create'),
-            'edit' => Pages\EditCiudades::route('/{record}/edit'),
+            'index' => Pages\ListRoles::route('/'),
+            'create' => Pages\CreateRole::route('/create'),
+            'edit' => Pages\EditRole::route('/{record}/edit'),
         ];
     }
 }

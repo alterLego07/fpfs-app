@@ -19,6 +19,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
+use Filament\Navigation\NavigationGroup;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -54,10 +55,14 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->profile()
-            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->plugin(FilamentBackgroundsPlugin::make())
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Seguridad'),
+            ])
+            ->sidebarFullyCollapsibleOnDesktop();
     }
 }
