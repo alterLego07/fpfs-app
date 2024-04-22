@@ -17,7 +17,8 @@
             <h1>Ficha del Jugador</h1>
             
             <div class="card">
-                <div class="card" style="border: 5px solid #ccc; padding:10px; margin:10px; width=300px !important;">
+                <div class="card-photo">
+                    {{-- <div class="card" style="border: 5px solid #ccc; padding:10px; margin:10px; width=300px !important;"> --}}
                     <img src="{{$foto}}" alt="{{ $record->nombre_jugador }}" width="300px" height="200px">
                 </div>
                 <h1>{{ $record->apellido_jugador }}, {{ $record->nombre_jugador }}</h1>
