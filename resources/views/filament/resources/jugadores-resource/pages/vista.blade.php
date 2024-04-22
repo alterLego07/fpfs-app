@@ -7,7 +7,6 @@
         $fecha_nac =  new DateTime($record->fecha_nacimiento);
         $edad = intval($fecha->diff($fecha_nac)->format('%y'));
         $foto = asset("storage/".$record->fotografia);
-        // dd($foto);
         $categoria = ( $edad > 18 ? 'PRIMERA' : 'C'.$edad);
 
     @endphp

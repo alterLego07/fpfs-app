@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\JugadoresResource\Pages;
 use App\Filament\Resources\JugadoresResource\RelationManagers;
 use App\Models\Jugadores;
-use BaconQrCode\Encoder\QrCode;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Split;
@@ -17,12 +17,15 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\Action;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class JugadoresResource extends Resource
 {
     protected static ?string $model = Jugadores::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $slug = 'jugadores';
 
     public static function form(Form $form): Form
     {
@@ -170,6 +173,7 @@ class JugadoresResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make()
                 ]),
             ]);
     }
@@ -189,5 +193,20 @@ class JugadoresResource extends Resource
             'edit' => Pages\EditJugadores::route('/{record}/edit'),
             'vista' =>Pages\ViewJugadores::route('/{record}/vista'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $usuario = User::find(auth()->user()->id);
+  
+        if($usuario->clubes()->first()){
+            return parent::getEloquentQuery()
+            ->where('club_id', $usuario->clubes()->first()->club_id);
+        }else{
+            return parent::getEloquentQuery()
+            ->whereNotNull('created_at');
+        }
+
+        
     }
 }
