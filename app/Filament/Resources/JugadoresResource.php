@@ -44,6 +44,7 @@ class JugadoresResource extends Resource
                     ->relationship('tipodocumento', 'descripcion')
                     ->required(),
                 Forms\Components\TextInput::make('documento')
+                    ->unique(ignorable: fn ($record) => $record)
                     ->required()
                     ->disabledOn('edit')
                     ->maxLength(50),
