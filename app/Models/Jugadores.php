@@ -37,6 +37,13 @@ class Jugadores extends Model
     }
 
 
+    public function categoria():BelongsTo
+    {
+        return $this->belongsTo(Categorias::class);
+        
+    }
+
+
 
 
 

@@ -52,6 +52,10 @@ class JugadoresResource extends Resource
                     ->maxLength(50)
                     ->disabledOn('edit')
                     ->default(null),
+                Forms\Components\Select::make('categoria_id')
+                    ->label('Categoria')
+                    ->relationship('categoria', 'descripcion')
+                    ->required(),
                 Forms\Components\DatePicker::make('fecha_nacimiento'),
                 Forms\Components\Select::make('nacionalidad_id')
                     ->relationship('nacionalidad', 'descripcion')
@@ -124,6 +128,9 @@ class JugadoresResource extends Resource
                 Tables\Columns\TextColumn::make('nro_ficha_anterior')
                     ->label('Nro. Ficha Anterior')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('categoria.descripcion')
+                    ->label('Categoria')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('fecha_nacimiento')
                     ->date()
                     ->sortable(),
