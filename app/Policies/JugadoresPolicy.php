@@ -31,7 +31,7 @@ class JugadoresPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole(['Administrador', 'Clubes']);
+        return $user->hasRole(['Administrador']);
     }
 
     /**
@@ -39,7 +39,7 @@ class JugadoresPolicy
      */
     public function update(User $user, Jugadores $jugadores): bool
     {
-        return $user->hasRole(['Administrador', 'Clubes']);
+        return $user->hasRole(['Administrador']);
     }
 
     /**
@@ -47,7 +47,7 @@ class JugadoresPolicy
      */
     public function delete(User $user, Jugadores $jugadores): bool
     {
-        return $user->hasRole(['Administrador', 'Clubes']);
+        return $user->hasRole(['Administrador']);
     }
 
     /**
@@ -55,7 +55,7 @@ class JugadoresPolicy
      */
     public function restore(User $user, Jugadores $jugadores): bool
     {
-        return $user->hasRole(['Administrador', 'Clubes']);
+        return $user->hasRole(['Administrador']);
     }
 
     /**

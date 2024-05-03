@@ -17,11 +17,11 @@
             
             <div class="card">
                 <div class="card-photo">
-                    {{-- <div class="card" style="border: 5px solid #ccc; padding:10px; margin:10px; width=300px !important;"> --}}
                     <img src="{{$foto}}" alt="{{ $record->nombre_jugador }}" width="300px" height="200px">
                 </div>
                 <h1>{{ $record->apellido_jugador }}, {{ $record->nombre_jugador }}</h1>
                 <p>Nro. de Ficha: {{ $record->nro_ficha_anterior }}</p>
+                <p>Club Actual: {{$record->club->nombre_club}}</p>
                 <p>Documento : {{ $record->documento}}</p>
             </div>
            
