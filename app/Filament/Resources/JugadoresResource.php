@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\JugadoresResource\Pages;
 use App\Filament\Resources\JugadoresResource\RelationManagers;
+use App\Models\Clubes;
 use App\Models\Jugadores;
 use App\Models\User;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Split;
@@ -18,6 +20,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\Action;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use Filament\Tables\Columns;
+use Filament\Tables\Filters\SelectFilter;
 
 class JugadoresResource extends Resource
 {
@@ -78,6 +82,9 @@ class JugadoresResource extends Resource
                     ->imageEditor()
                     ->imageEditorViewportWidth('1920')
                     ->imageEditorViewportHeight('1080'),
+                Forms\Components\FileUpload::make('documentos_extra')
+                    ->preserveFilenames()
+                    ->directory('jugadores/documento'),
                 Forms\Components\DatePicker::make('fecha_vencimiento_cedula'),
                 Forms\Components\Select::make('user_id')
                     ->label('Usuario Creador')
@@ -103,7 +110,8 @@ class JugadoresResource extends Resource
                         '1' => 'Masculino',
                         '2' => 'Femenino',
                         '3' => 'Otro'
-                    ]),
+                    ])
+                    ->columns(3),
             ]);
     }
 
@@ -148,17 +156,28 @@ class JugadoresResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('habilitado')
-                    ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\ToggleColumn::make('estado'),
-                Tables\Columns\TextColumn::make('sexo')
+                    ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        '1' => 'gray',
-                        '2' => 'warning',
-                        '3' => 'success',
+                        'Inhabilitado' => 'danger',
+                        'Habilitado' => 'success',
+                        default => 'gray',
                     })
                     ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('estado')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Inactivo' => 'danger',
+                        'Activo' => 'success',
+                        default => 'gray',
+                    })
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('sexo')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Masculino' => 'danger',
+                        'Femenino' => 'success',
+                    })
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -170,7 +189,24 @@ class JugadoresResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('estado')
+                ->options([
+                    '1' => 'Activo',
+                    '2' => 'Inactivo',
+                ]),
+                SelectFilter::make('habilitado')
+                ->label('Habilitacion')
+                ->options([
+                    '1' => 'Habilitado',
+                    '2' => 'Inhabilitado',
+                    '3' => 'Libre'
+                ]),
+                SelectFilter::make('sexo')
+                ->options([
+                    '1' => 'Masculino',
+                    '2' => 'Femenino'
+                ]),
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -206,10 +242,35 @@ class JugadoresResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $usuario = User::find(auth()->user()->id);
+
+        $federacion = $usuario->federacion()->get();
+
+        if($federacion){
+            $federaciones = [];
+            foreach($federacion as $value){
+                if($value->estado == 1){
+                    array_push($federaciones, $value->federacion_id);
+                }
+            }
+
+            $clubes = Clubes::whereIn('federacion_id', $federaciones)->get();
+
+            $club = [];
+
+            foreach($clubes as $valor){
+
+                array_push($club, $valor->id);
+
+            }
+
+        }
+
   
         if($usuario->clubes()->first()){
             return parent::getEloquentQuery()
             ->where('club_id', $usuario->clubes()->first()->club_id);
+        }elseif(count($federaciones) > 0){
+            return parent::getEloquentQuery()->whereIn('club_id', $club);
         }else{
             return parent::getEloquentQuery()
             ->whereNotNull('created_at');

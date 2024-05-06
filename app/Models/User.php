@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ClubesUsuarios::class, 'user_id');
     }
+
+    public function federacion(): HasMany
+    {
+        return $this->hasMany(FederacionesUsuarios::class);
+    }
 }
