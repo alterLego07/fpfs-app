@@ -177,6 +177,7 @@ class JugadoresResource extends Resource
                     ->color(fn (string $state): string => match ($state) {
                         'Masculino' => 'danger',
                         'Femenino' => 'success',
+                        default => 'gray',
                     })
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
