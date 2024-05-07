@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,3 +19,4 @@ Route::get('/', function () {
 });
 
 
+Route::get('/{record}/pdf', [PDFController::class, 'downloadJugadores'])->name('jugadores.pdf.download');

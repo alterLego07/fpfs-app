@@ -214,6 +214,10 @@ class JugadoresResource extends Resource
                 Action::make('Ver Planilla')
                 ->icon('heroicon-o-qr-code')
                 ->url(fn(Jugadores $record): string => static::getUrl('vista', ['record' => $record])),
+                Action::make('Ver PDF')
+                ->icon('heroicon-o-document')
+                ->url(fn(Jugadores $record) => route('jugadores.pdf.download', $record))
+                ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
