@@ -39,14 +39,12 @@ class PDFController extends Controller
             'sexo' => $sexo,
             'habilitado' => $habilitado,
             'url' => url()->current(),
-
-
         ];
 
 
 
-
+        $nombre_pdf = $nro_ficha.'.pdf';
         $pdf = Pdf::loadView('jugadores.pdf.download', ['record' => $datos]);
-        return $pdf->download('jugador.pdf');
+        return $pdf->download($nombre_pdf);
     }
 }
