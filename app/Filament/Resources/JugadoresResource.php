@@ -190,6 +190,9 @@ class JugadoresResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                SelectFilter::make('categoria_id')
+                ->label('Categoria')
+                ->relationship('categoria', 'descripcion'),
                 SelectFilter::make('estado')
                 ->options([
                     '1' => 'Activo',
