@@ -6,6 +6,7 @@ use App\Models\Jugadores;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use DateTime;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PDFController extends Controller
 {
@@ -27,6 +28,9 @@ class PDFController extends Controller
             $habilitado = 'Libre' ;
         }
 
+        // Generar el código QR
+        $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate(url()->current()));
+
         $datos = [
             'nombre' => $record->apellido_jugador.', '.$record->nombre_jugador,
             'foto' => $foto,
@@ -38,12 +42,13 @@ class PDFController extends Controller
             'ficha'=> $nro_ficha,
             'sexo' => $sexo,
             'habilitado' => $habilitado,
-            'url' => url()->current(),
+            'qrcode' => $qrcode,
         ];
 
 
 
         $nombre_pdf = $nro_ficha.'.pdf';
+
         $pdf = Pdf::loadView('jugadores.pdf.download', ['record' => $datos]);
         return $pdf->download($nombre_pdf);
     }
