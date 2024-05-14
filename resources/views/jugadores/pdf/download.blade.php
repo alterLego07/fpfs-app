@@ -49,11 +49,7 @@
              </div>
         <div style="flex: 1;">
             <h2>Código QR</h2>
-            @if (empty($record['url']))
-            <p>URL del código QR vacía o no definida.</p>
-            @else
-            {!! QrCode::size(200)->generate($record['url']) !!}
-            @endif
+            <img src="data:image/png;base64, {!! $record['qrcode'] !!}">
                     
         </div>
     </div>
