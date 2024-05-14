@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,8 +50,7 @@
              </div>
         <div style="flex: 1;">
             <h2>Código QR</h2>
-            <img src="data:image/png;base64, {!! $record['qrcode'] !!}">
-                    
+            <img src="data:image/png;base64, {!! $record['qrcode'] !!}" title="Codigo QR">
         </div>
     </div>
 </body>
