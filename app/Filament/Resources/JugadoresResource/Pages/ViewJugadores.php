@@ -5,6 +5,7 @@ namespace App\Filament\Resources\JugadoresResource\Pages;
 use App\Filament\Resources\JugadoresResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ViewJugadores extends ViewRecord
 {
