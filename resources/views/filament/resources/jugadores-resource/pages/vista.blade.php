@@ -23,13 +23,13 @@
                 <p>Nro. de Ficha: {{ $record->nro_ficha_anterior }}</p>
                 <p>Club Actual: {{$record->club->nombre_club}}</p>
                 <p>Documento : {{ $record->documento}}</p>
+                <p>Fecha de Nacimiento: {{ $record->fecha_nacimiento }}</p>
             </div>
            
             <p>Edad: {{ $edad }} años</p>
             <p>Categoria: {{ $categoria }}</p>
             <p>Género: {{ ($record->sexo == 1) ? 'Masculino': 'Femenino'}}</p>
-            
-            <!-- Añade más campos según sea necesario -->
+
         </div>
         <div style="flex: 1;">
             <h2>Código QR</h2>
