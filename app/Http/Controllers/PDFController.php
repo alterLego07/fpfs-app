@@ -39,6 +39,7 @@ class PDFController extends Controller
             'nro_ficha' => $nro_ficha,
             'club' => $record->club->nombre_club,
             'documento' => $record->documento,
+            'fecha_nacimiento' => $record->fecha_nacimiento,
             'ficha'=> $nro_ficha,
             'sexo' => $sexo,
             'habilitado' => $habilitado,
