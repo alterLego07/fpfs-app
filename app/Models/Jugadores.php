@@ -44,11 +44,6 @@ class Jugadores extends Model
     }
 
 
-    // public function getSexoAttribute($value)
-    // {
-    //     return $value == 1 ? 'Masculino' : 'Femenino';
-    // }
-
     public function getEstadoAttribute($value)
     {
         return $value == 1 ? 'Activo' : 'Inactivo';

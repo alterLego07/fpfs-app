@@ -13,7 +13,9 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Notifications\Collection;
 use Filament\Resources\Resource;
+use Filament\Resources\Table as ResourceTable;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,6 +24,8 @@ use Filament\Tables\Actions\Action;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use Filament\Tables\Columns;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Actions\BulkActionGroup;
 
 class JugadoresResource extends Resource
 {
@@ -224,7 +228,14 @@ class JugadoresResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make()->authorize(function ($records) {
+                    //     if (!$records) {
+                    //         return false;
+                    //     }
+                    //     return $records->every(function ($record) {
+                    //         return auth()->user()->can('delete', $record);
+                    //     });
+                    // }),
                     ExportBulkAction::make()
                 ]),
             ]);
