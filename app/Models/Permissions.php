@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;  
-use Spatie\Permission\Models\Permission as ModelPermision;
+// use Illuminate\Database\Eloquent\Model;  
+use Spatie\Permission\Models\Permission as ModelsPermision;
 
-class Permissions extends ModelPermision
+class Permissions extends ModelsPermision
 {
     use HasFactory;
 }

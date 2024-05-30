@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\User'                           => 'App\Policies\UserPolicy',
         'App\Models\Jugadores'                      => 'App\Policies\JugadoresPolicy',
         'App\Models\Ciudades'                       => 'App\Policies\CiudadesPolicy',
-        'App\Models\Tipo_documento'                 => 'App\Policies\TipoDocumentosPolicy',
+        'App\Models\Tipo_documentos'                 => 'App\Policies\TipoDocumentosPolicy',
     ];
 
     /**
