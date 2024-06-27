@@ -14,7 +14,8 @@ class ClubesPolicy
     public function viewAny(User $user): bool
     {
         //
-        return $user->hasRole(['Administrador']);
+        #return $user->hasRole(['Administrador']);
+	return $user->hasRole(['Administrador', 'Federaciones']);
     }
 
     /**
@@ -23,7 +24,8 @@ class ClubesPolicy
     public function view(User $user, Clubes $clubes): bool
     {
         //
-        return $user->hasRole(['Administrador']);
+        //return $user->hasRole(['Administrador']);
+	return $user->hasRole(['Administrador', 'Federaciones']);
     }
 
     /**
@@ -32,7 +34,8 @@ class ClubesPolicy
     public function create(User $user): bool
     {
         //
-        return $user->hasRole(['Administrador']);
+        //return $user->hasRole(['Administrador']);
+	return $user->hasRole(['Administrador', 'Federaciones']);
     }
 
     /**
@@ -41,7 +44,8 @@ class ClubesPolicy
     public function update(User $user, Clubes $clubes): bool
     {
         //
-        return $user->hasRole(['Administrador']);
+        //return $user->hasRole(['Administrador']);
+	return $user->hasRole('Administrador', 'Federaciones');
     }
 
     /**
@@ -50,7 +54,8 @@ class ClubesPolicy
     public function delete(User $user, Clubes $clubes): bool
     {
         //
-        return $user->hasRole(['Administrador']);
+        //return $user->hasRole(['Administrador']);
+	return $user->hasRole(['Administrador', 'Federaciones']);
     }
 
     /**
@@ -58,8 +63,8 @@ class ClubesPolicy
      */
     public function restore(User $user, Clubes $clubes): bool
     {
-        //
-        return $user->hasRole(['Administrador']);
+       // return $user->hasRole(['Administrador']);
+	return $user->hasRole(['Administrador', 'Federaciones']);
     }
 
     /**
