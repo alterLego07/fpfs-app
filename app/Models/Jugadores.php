@@ -49,19 +49,10 @@ class Jugadores extends Model
         return $value == 1 ? 'Activo' : 'Inactivo';
     }
 
-    // public function getHabilitadoAttribute($value)
-    // {
-    //     if($value == 1){
-    //         return 'Habilitado';
-    //     }elseif($value == 2){
-    //         return 'Inhabilitado';
-    //     }else{
-    //         return 'Libre';
-    //     }
-     
-    // }
-
-
+    public function club_origen () : BelongsTo
+    {
+        return $this->belongsTo(Clubes::class, 'club_origen_id', 'id');
+    }
 
 
 }

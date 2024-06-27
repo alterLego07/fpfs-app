@@ -21,7 +21,7 @@
                 </div>
                 <h1>{{ $record->apellido_jugador }}, {{ $record->nombre_jugador }}</h1>
                 <p>Nro. de Ficha: {{ $record->nro_ficha_anterior }}</p>
-                <p>Club Actual: {{$record->club->nombre_club}}</p>
+                <p>Club de Origen: {{$record->club->nombre_club}}</p>
                 <p>Documento : {{ $record->documento}}</p>
                 <p>Fecha de Nacimiento: {{ $record->fecha_nacimiento }}</p>
             </div>
