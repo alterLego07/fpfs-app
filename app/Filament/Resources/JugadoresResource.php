@@ -69,8 +69,24 @@ class JugadoresResource extends Resource
                     ->relationship('nacionalidad', 'descripcion')
                     ->default(null),
                 Forms\Components\Select::make('club_id')
+                    ->label('Club Actual')
                     ->relationship('club', 'nombre_club')
                     ->default(null),
+                Forms\Components\Select::make('club_origen_id')
+                    ->label('Club de Origen')
+                    ->relationship('club_origen', 'nombre_club')
+                    ->default(null)
+                    ->required(), 
+                Forms\Components\Toggle::make('prestamo')
+                    ->label('Prestamo')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->default(false),
+                Forms\Components\DatePicker::make('tiempo_prestamo')
+                    ->label('Tiempo de Prestamo'),
+                Forms\Components\Textarea::make('observaciones')
+                    ->label('Observaciones')
+                    ->maxLength(500),
                 Forms\Components\FileUpload::make('fotografia')
                     ->label('Foto del Jugador')
                     ->image()
