@@ -170,6 +170,21 @@ class JugadoresResource extends Resource
                 Tables\Columns\TextColumn::make('club.nombre_club')
                     ->label('Club Actual')
                     ->searchable(),
+		Tables\Columns\TextColumn::make('club_origen.nombre_club')
+                    ->label('Club de Origen')
+                    ->searchable(),
+                Tables\Columns\BooleanColumn::make('prestamo')
+                    ->label('Préstamo'),
+                Tables\Columns\TextColumn::make('tiempo_prestamo')
+                    ->label('Tiempo de Préstamo')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('observaciones')
+                    ->label('Observaciones')
+                    ->limit(50)
+                    ->tooltip(function ($record) {
+                        return $record->observaciones;
+                    }),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Usuario Creacion')
                     ->numeric()
