@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ClubesResource\Pages;
 use App\Filament\Resources\ClubesResource\RelationManagers;
 use App\Models\Clubes;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -102,5 +103,37 @@ class ClubesResource extends Resource
             'create' => Pages\CreateClubes::route('/create'),
             'edit' => Pages\EditClubes::route('/{record}/edit'),
         ];
+    }
+
+
+     /**
+     * The function `getEloquentQuery` retrieves data based on the user's federations and clubs in a PHP
+     * Laravel application.
+     * 
+     * @return Builder The `getEloquentQuery` function returns an Eloquent query based on certain
+     * conditions.
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        $usuario = User::find(auth()->user()->id);
+
+        $federacion = $usuario->federacion()->get();
+
+        if($federacion){
+            $federaciones = [];
+            foreach($federacion as $value){
+                if($value->estado == 1){
+                    array_push($federaciones, $value->federacion_id);
+                }
+            }
+        }
+
+        if(count($federaciones) > 0){
+            return parent::getEloquentQuery()->whereIn('federacion_id', $federaciones);
+        }else{
+            return parent::getEloquentQuery()->whereNotNull('created_at');
+        }
+
+        
     }
 }
