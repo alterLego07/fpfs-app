@@ -274,6 +274,13 @@ class JugadoresResource extends Resource
         ];
     }
 
+    /**
+     * The function `getEloquentQuery` retrieves data based on the user's federations and clubs in a PHP
+     * Laravel application.
+     * 
+     * @return Builder The `getEloquentQuery` function returns an Eloquent query based on certain
+     * conditions.
+     */
     public static function getEloquentQuery(): Builder
     {
         $usuario = User::find(auth()->user()->id);
