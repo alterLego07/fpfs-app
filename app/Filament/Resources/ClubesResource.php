@@ -6,6 +6,7 @@ use App\Filament\Resources\ClubesResource\Pages;
 use App\Filament\Resources\ClubesResource\RelationManagers;
 use App\Models\Clubes;
 use App\Models\User;
+use App\Models\FederacionesUsuarios;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\Pages\CreateRecord;
 
 class ClubesResource extends Resource
 {
@@ -29,8 +31,15 @@ class ClubesResource extends Resource
                     ->maxLength(50)
                     ->default(null),
                 Forms\Components\Select::make('federacion_id')
+                    ->label('Federación')
                     ->relationship('federacion', 'nombre_federacion')
-                    ->required(),
+                    ->required()
+                    ->options(function() {
+                        $userId = auth()->id();
+                        return FederacionesUsuarios::join('federaciones', 'federaciones.id', '=', 'federaciones_usuarios.federacion_id')
+                        ->where('federaciones_usuarios.user_id', $userId)
+                        ->pluck('federaciones.nombre_federacion', 'federaciones.id');
+                    }),
                 Forms\Components\DatePicker::make('fecha_afiliacion'),
                 Forms\Components\Select::make('ciudad_id')
                     ->relationship('ciudad', 'descripcion')

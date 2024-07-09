@@ -74,7 +74,10 @@ class JugadoresResource extends Resource
                     ->default(null),
                 Forms\Components\Select::make('club_origen_id')
                     ->label('Club de Origen')
-                    ->relationship('club_origen', 'nombre_club')
+                    ->options(function() {
+                        return Clubes::customSelect(auth()->user()->id)
+                                   ->pluck('nombre_club', 'id');
+                    })
                     ->default(null)
                     ->required(), 
                 Forms\Components\Toggle::make('prestamo')
