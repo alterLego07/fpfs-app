@@ -12,9 +12,7 @@ class Jugadores extends Model
     use HasFactory;
 
     protected $guarded = [];
-
-
-
+    
     public function tipodocumento (): HasOne
     {
         return $this->hasOne(Tipo_documentos::class, 'id', 'tipo_documento_id');
@@ -53,6 +51,9 @@ class Jugadores extends Model
     {
         return $this->belongsTo(Clubes::class, 'club_origen_id', 'id');
     }
-
+    public function club_primer_ficha () : BelongsTo
+    {
+        return $this->belongsTo(Clubes::class, 'club_primer_ficha', 'id');
+    }
 
 }
