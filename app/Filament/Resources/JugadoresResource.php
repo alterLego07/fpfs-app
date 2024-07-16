@@ -262,84 +262,84 @@ class JugadoresResource extends Resource
                         'Femenino' => 'Femenino',
                         'Otro' => 'Otro'
                     ])
-                    ])
-                    ->bulkActions([
-                        Tables\Actions\BulkActionGroup::make([
-                            // Tables\Actions\DeleteBulkAction::make()->authorize(function ($records) {
-                            //     if (!$records) {
-                            //         return false;
-                            //     }
-                            //     return $records->every(function ($record) {
-                            //         return auth()->user()->can('delete', $record);
-                            //     });
-                            // }),
-                            ExportBulkAction::make()
-                        ]),
-                    ]);
-            }
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    // Tables\Actions\DeleteBulkAction::make()->authorize(function ($records) {
+                    //     if (!$records) {
+                    //         return false;
+                    //     }
+                    //     return $records->every(function ($record) {
+                    //         return auth()->user()->can('delete', $record);
+                    //     });
+                    // }),
+                    ExportBulkAction::make()
+                ]),
+            ]);
+    }
         
-            public static function getRelations(): array
-            {
-                return [
-                    //
-                ];
-            }
-        
-            public static function getPages(): array
-            {
-                return [
-                    'index' => Pages\ListJugadores::route('/'),
-                    'create' => Pages\CreateJugadores::route('/create'),
-                    'edit' => Pages\EditJugadores::route('/{record}/edit'),
-                    'vista' =>Pages\ViewJugadores::route('/{record}/vista'),
-                ];
-            }
-        
-            /**
-             * The function `getEloquentQuery` retrieves data based on the user's federations and clubs in a PHP
-             * Laravel application.
-             * 
-             * @return Builder The `getEloquentQuery` function returns an Eloquent query based on certain
-             * conditions.
-             */
-            public static function getEloquentQuery(): Builder
-            {
-                $usuario = User::find(auth()->user()->id);
-        
-                $federacion = $usuario->federacion()->get();
-        
-                if($federacion){
-                    $federaciones = [];
-                    foreach($federacion as $value){
-                        if($value->estado == 1){
-                            array_push($federaciones, $value->federacion_id);
-                        }
-                    }
-        
-                    $clubes = Clubes::whereIn('federacion_id', $federaciones)->get();
-        
-                    $club = [];
-        
-                    foreach($clubes as $valor){
-        
-                        array_push($club, $valor->id);
-        
-                    }
-        
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListJugadores::route('/'),
+            'create' => Pages\CreateJugadores::route('/create'),
+            'edit' => Pages\EditJugadores::route('/{record}/edit'),
+            'vista' =>Pages\ViewJugadores::route('/{record}/vista'),
+        ];
+    }
+
+    /**
+     * The function `getEloquentQuery` retrieves data based on the user's federations and clubs in a PHP
+     * Laravel application.
+     * 
+     * @return Builder The `getEloquentQuery` function returns an Eloquent query based on certain
+     * conditions.
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        $usuario = User::find(auth()->user()->id);
+
+        $federacion = $usuario->federacion()->get();
+
+        if($federacion){
+            $federaciones = [];
+            foreach($federacion as $value){
+                if($value->estado == 1){
+                    array_push($federaciones, $value->federacion_id);
                 }
-        
-          
-                if($usuario->clubes()->first()){
-                    return parent::getEloquentQuery()
-                    ->where('club_id', $usuario->clubes()->first()->club_id);
-                }elseif(count($federaciones) > 0){
-                    return parent::getEloquentQuery()->whereIn('club_id', $club);
-                }else{
-                    return parent::getEloquentQuery()
-                    ->whereNotNull('created_at');
-                }
-        
-                
             }
+
+            $clubes = Clubes::whereIn('federacion_id', $federaciones)->get();
+
+            $club = [];
+
+            foreach($clubes as $valor){
+
+                array_push($club, $valor->id);
+
+            }
+
         }
+
+    
+        if($usuario->clubes()->first()){
+            return parent::getEloquentQuery()
+            ->where('club_id', $usuario->clubes()->first()->club_id);
+        }elseif(count($federaciones) > 0){
+            return parent::getEloquentQuery()->whereIn('club_id', $club);
+        }else{
+            return parent::getEloquentQuery()
+            ->whereNotNull('created_at');
+        }
+
+        
+    }
+}
         
