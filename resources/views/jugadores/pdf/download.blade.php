@@ -55,7 +55,7 @@
                 <div class="card-details">
                     <h2>{{ $record['nombre'] }}</h2>
                     <p>Nro. de Ficha: {{ $record['ficha'] }}</p>
-                    <p>Club de Origen: {{$record['club']}}</p>
+                    <p>Club Actual: {{$record['club']}}</p>
                     <p>Estado Ficha : {{ $record['habilitado']}}</p>
                     <p>Documento : {{ number_format($record['documento'], 0, ',', '.') }}</p>
                     <p>Fecha de Nacimiento : {{ \Carbon\Carbon::parse($record['fecha_nacimiento'])->format('d/m/Y') }}</p>
