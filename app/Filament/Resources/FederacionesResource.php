@@ -56,9 +56,10 @@ class FederacionesResource extends Resource
                     ->label('Observaciones')
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image_url')
-                    ->label('Logo de la Federación')
+                    ->label('Registro de Firmas')
                     ->image()
-                    ->imageEditor(),
+                    ->imageEditor()
+                    ->directory('federaciones/firmas'),
             ]);
     }
 
@@ -77,7 +78,8 @@ class FederacionesResource extends Resource
                 Tables\Columns\TextColumn::make('fecha_afiliacion')
                     ->date()
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('image_url'),
+                Tables\Columns\ImageColumn::make('image_url')
+                    ->label('Registro de Firmas'),
             ])
             ->filters([
                 //
