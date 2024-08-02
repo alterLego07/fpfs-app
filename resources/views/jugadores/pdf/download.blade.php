@@ -31,7 +31,17 @@
             border-radius: 8px;
         }
         .card-details {
-            margin-right: 240px; /* Adjust margin to make room for the photo and frame */
+            margin-right: 240px; 
+        }
+        .highlight {
+            font-weight: bold;
+            color: #007BFF; /* Color destacado */
+        }
+        .hr-line {
+            border: none;
+            border-top: 2px solid #007BFF; /* Color de la línea */
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
         .qr-code {
             margin-top: 20px;
@@ -50,18 +60,20 @@
             <h3>Ficha de Habilitación del Jugador</h3>
             <div class="card">
                 <div class="card-photo">
-                    <img src="{{$record['foto']}}" alt="{{ $record['nombre'] }}">
+                    <img src="{{ $record['foto'] }}" alt="{{ $record['nombre'] }}">
                 </div>
                 <div class="card-details">
                     <h2>{{ $record['nombre'] }}</h2>
                     <p>Nro. de Ficha: {{ $record['ficha'] }}</p>
-                    <p>Club Actual: {{$record['club']}}</p>
-                    <p>Estado Ficha : {{ $record['habilitado']}}</p>
-                    <p>Documento : {{ number_format($record['documento'], 0, ',', '.') }}</p>
-                    <p>Fecha de Nacimiento : {{ \Carbon\Carbon::parse($record['fecha_nacimiento'])->format('d/m/Y') }}</p>
+                    <p>Club Primer Fichaje: {{ $record['club_primer_fichaje'] }}</p>
+                    <p>Estado Ficha: {{ $record['habilitado'] }}</p>
+                    <p>Documento: {{ number_format($record['documento'], 0, ',', '.') }}</p>
+                    <p>Fecha de Nacimiento: {{ \Carbon\Carbon::parse($record['fecha_nacimiento'])->format('d/m/Y') }}</p>
                     <p>Edad: {{ $record['edad'] }} años</p>
                     <p>Categoria: {{ $record['categoria'] }}</p>
-                    <p>Género: {{ $record['sexo']}}</p>
+                    <p>Género: {{ $record['sexo'] }}</p>
+                    <hr class="hr-line">
+                    <p class="highlight">Club Actual: {{ $record['club'] }}</p>
                 </div>
             </div>
         </div>
@@ -77,3 +89,5 @@
     </div>
 </body>
 </html>
+
+
