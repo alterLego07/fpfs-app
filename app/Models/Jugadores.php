@@ -53,7 +53,7 @@ class Jugadores extends Model
     }
     public function club_primer_ficha () : BelongsTo
     {
-        return $this->belongsTo(Clubes::class, 'club_primer_ficha', 'id');
+        return $this->belongsTo(Clubes::class, 'club_primer_fichaje', 'id');
     }
 
 }
