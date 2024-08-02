@@ -177,7 +177,7 @@ class JugadoresResource extends Resource
                     ->label('Nacionalidad')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('clubprimerfichaje.nombre_club')
+                Tables\Columns\TextColumn::make('club_primer_ficha.nombre_club')
                     ->label('Club Primer Fichaje')
                     ->sortable()
                     ->searchable(),
