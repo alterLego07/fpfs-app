@@ -12,43 +12,40 @@ class PDFController extends Controller
 {
     public function downloadJugadores(Jugadores $record)
     {
-
         $fecha = new DateTime();
-        $fecha_nac =  new DateTime($record->fecha_nacimiento);
+        $fecha_nac = new DateTime($record->fecha_nacimiento);
         $edad = intval($fecha->diff($fecha_nac)->format('%y'));
         $foto = asset("storage/".$record->fotografia);
         $nro_ficha = $record->nro_ficha_anterior;
-        $sexo = ($record->sexo == 1) ? 'Masculino': 'Femenino';
+        $sexo = ($record->sexo == 1) ? 'Masculino' : 'Femenino';
 
-        if($record->habilitado == 1){
-            $habilitado = 'Habilitado' ;
-        }elseif($record->habilitado == 2){
-            $habilitado = 'Inhabilitado' ;
-        }else{
-            $habilitado = 'Libre' ;
+        if ($record->habilitado == 1) {
+            $habilitado = 'Habilitado';
+        } elseif ($record->habilitado == 2) {
+            $habilitado = 'Inhabilitado';
+        } else {
+            $habilitado = 'Libre';
         }
 
-        // Generar el código QR
         $qrcode = base64_encode(QrCode::format('svg')->size(200)->errorCorrection('H')->generate(url()->current()));
 
         $datos = [
-            'nombre' => $record->apellido_jugador.', '.$record->nombre_jugador,
+            'nombre' => $record->apellido_jugador . ', ' . $record->nombre_jugador,
             'foto' => $foto,
             'edad' => $edad,
             'categoria' => $record->categoria->descripcion,
             'nro_ficha' => $nro_ficha,
-            'club' => $record->club->nombre_club,
+            'club_primer_fichaje' => $record->club_primer_ficha?->nombre_club ?? 'No disponible',
+            'club' => $record->club?->nombre_club ?? 'No disponible',
             'documento' => $record->documento,
             'fecha_nacimiento' => $record->fecha_nacimiento,
-            'ficha'=> $nro_ficha,
+            'ficha' => $nro_ficha,
             'sexo' => $sexo,
             'habilitado' => $habilitado,
             'qrcode' => $qrcode,
         ];
 
-
-
-        $nombre_pdf = $nro_ficha.'.pdf';
+        $nombre_pdf = $nro_ficha . '.pdf';
 
         $pdf = Pdf::loadView('jugadores.pdf.download', ['record' => $datos]);
         return $pdf->download($nombre_pdf);
