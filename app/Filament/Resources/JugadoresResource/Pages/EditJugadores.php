@@ -10,10 +10,11 @@ class EditJugadores extends EditRecord
 {
     protected static string $resource = JugadoresResource::class;
 
-    protected function getHeaderActions(): array
+    protected function mutateFormDataBeforeSave(array $data): array
     {
-        return [
-            Actions\DeleteAction::make(),
-        ];
+
+        unset($data['user_id']);
+        return $data;
     }
+
 }

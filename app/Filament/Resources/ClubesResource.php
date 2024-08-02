@@ -51,7 +51,9 @@ class ClubesResource extends Resource
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image_url')
-                    ->image(),
+                    ->label('Registro de Firmas')
+                    ->image()
+                    ->directory('clubes/registro'),
             ]);
     }
 
@@ -73,7 +75,8 @@ class ClubesResource extends Resource
                 Tables\Columns\TextColumn::make('departamento.nombre')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('image_url'),
+                Tables\Columns\ImageColumn::make('image_url')
+                    ->label('Registro de Firmas'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha Creacion')
                     ->dateTime()

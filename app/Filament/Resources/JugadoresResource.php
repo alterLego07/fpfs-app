@@ -72,16 +72,15 @@ class JugadoresResource extends Resource
                     ->label('Club Primer Fichaje')
                     ->options(function() {
                         return Clubes::customSelect(auth()->user()->id)
-                        ->pluck('nombre_club', 'id');
+                            ->pluck('nombre_club', 'id');
                     })
-                    ->disabledOn('edit')
-                    ->default(null)
+                    //->default(null)
                     ->required(),
                 Forms\Components\Select::make('club_origen_id')
                     ->label('Club Definitivo')
                     ->options(function() {
-                    return Clubes::customSelect(auth()->user()->id)
-                    ->pluck('nombre_club', 'id');
+                        return Clubes::customSelect(auth()->user()->id)
+                            ->pluck('nombre_club', 'id');
                     })
                     ->default(null)
                     ->required(),
@@ -176,10 +175,9 @@ class JugadoresResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nacionalidad.descripcion')
                     ->label('Nacionalidad')
-                    // ->listWithLineBreaks()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('club_primer_fichaje.nombre_club')
+                Tables\Columns\TextColumn::make('clubprimerfichaje.nombre_club')
                     ->label('Club Primer Fichaje')
                     ->sortable()
                     ->searchable(),
@@ -263,21 +261,23 @@ class JugadoresResource extends Resource
                         'Otro' => 'Otro'
                     ])
             ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Action::make('Ver Planilla')
+                    ->icon('heroicon-o-qr-code')
+                    ->url(fn(Jugadores $record): string => static::getUrl('vista', ['record' => $record])),
+                Action::make('Ver PDF')
+                    ->icon('heroicon-o-document')
+                    ->url(fn(Jugadores $record) => route('jugadores.pdf.download', $record))
+                    ->openUrlInNewTab(),
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make()->authorize(function ($records) {
-                    //     if (!$records) {
-                    //         return false;
-                    //     }
-                    //     return $records->every(function ($record) {
-                    //         return auth()->user()->can('delete', $record);
-                    //     });
-                    // }),
                     ExportBulkAction::make()
                 ]),
             ]);
     }
-        
+
     public static function getRelations(): array
     {
         return [
@@ -291,27 +291,20 @@ class JugadoresResource extends Resource
             'index' => Pages\ListJugadores::route('/'),
             'create' => Pages\CreateJugadores::route('/create'),
             'edit' => Pages\EditJugadores::route('/{record}/edit'),
-            'vista' =>Pages\ViewJugadores::route('/{record}/vista'),
+            'vista' => Pages\ViewJugadores::route('/{record}/vista'),
         ];
     }
 
-    /**
-     * The function `getEloquentQuery` retrieves data based on the user's federations and clubs in a PHP
-     * Laravel application.
-     * 
-     * @return Builder The `getEloquentQuery` function returns an Eloquent query based on certain
-     * conditions.
-     */
     public static function getEloquentQuery(): Builder
     {
         $usuario = User::find(auth()->user()->id);
 
         $federacion = $usuario->federacion()->get();
 
-        if($federacion){
+        if ($federacion) {
             $federaciones = [];
-            foreach($federacion as $value){
-                if($value->estado == 1){
+            foreach ($federacion as $value) {
+                if ($value->estado == 1) {
                     array_push($federaciones, $value->federacion_id);
                 }
             }
@@ -320,26 +313,19 @@ class JugadoresResource extends Resource
 
             $club = [];
 
-            foreach($clubes as $valor){
-
+            foreach ($clubes as $valor) {
                 array_push($club, $valor->id);
-
             }
-
         }
 
-    
-        if($usuario->clubes()->first()){
+        if ($usuario->clubes()->first()) {
             return parent::getEloquentQuery()
-            ->where('club_id', $usuario->clubes()->first()->club_id);
-        }elseif(count($federaciones) > 0){
+                ->where('club_id', $usuario->clubes()->first()->club_id);
+        } elseif (count($federaciones) > 0) {
             return parent::getEloquentQuery()->whereIn('club_id', $club);
-        }else{
+        } else {
             return parent::getEloquentQuery()
-            ->whereNotNull('created_at');
+                ->whereNotNull('created_at');
         }
-
-        
     }
 }
-        
