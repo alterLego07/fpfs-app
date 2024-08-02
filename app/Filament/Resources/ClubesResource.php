@@ -76,7 +76,8 @@ class ClubesResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('image_url')
-                    ->label('Registro de Firmas'),
+                    ->label('Registro de Firmas')
+                    ->directory('clubes/registro'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha Creacion')
                     ->dateTime()
